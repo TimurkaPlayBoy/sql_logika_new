@@ -38,3 +38,14 @@ def get_courses():
         cursor = conn.cursor()
         cursor.execute("SELECT * FROM courses")
         return cursor.fetchall()
+def get_students_in_course(course_id):
+    with create_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute("""
+            SELECT students.id, students.name
+            FROM students
+            JOIN student_courses
+                ON students.id = student_courses.student_id
+            WHERE student_courses.course_id = ?
+        """, (course_id,))
+        return cursor.fetchall()
