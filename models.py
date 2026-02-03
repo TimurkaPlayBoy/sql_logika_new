@@ -1,0 +1,27 @@
+from database import create_connection
+
+
+def add_student(name, age, major):
+    with create_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute(
+            "INSERT INTO students (name, age, major) VALUES (?, ?, ?)",
+            (name, age, major),
+        )
+
+
+def add_course(course_name, instructor):
+    with create_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute(
+            "INSERT INTO courses (course_name, instructor) VALUES (?, ?)",
+            (course_name, instructor),
+        )
+
+def enroll_student(student_id, course_id):
+    with create_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute(
+            "INSERT OR IGNORE INTO student_courses (student_id, course_id) VALUES (?, ?)",
+            (student_id, course_id),
+        )
