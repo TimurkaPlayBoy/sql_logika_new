@@ -25,3 +25,16 @@ def enroll_student(student_id, course_id):
             "INSERT OR IGNORE INTO student_courses (student_id, course_id) VALUES (?, ?)",
             (student_id, course_id),
         )
+
+def get_students():
+    with create_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM students")
+        return cursor.fetchall()
+
+
+def get_courses():
+    with create_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM courses")
+        return cursor.fetchall()
